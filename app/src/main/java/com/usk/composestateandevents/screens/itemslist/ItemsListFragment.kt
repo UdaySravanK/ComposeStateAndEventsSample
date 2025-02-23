@@ -64,6 +64,9 @@ class ItemsListFragment : Fragment() {
 
   private fun handleSideEffects(sideEffect: ItemsListEventSideEffects) {
     when (sideEffect) {
+      is ItemsListEventSideEffects.NoOpSideEffect -> {
+        // No-op: Just to keep it as the last emitted event
+      }
       is ItemsListEventSideEffects.NavigateToItemDetails -> {
         // Navigate to item details screen
         val fragment = ItemDetailsFragment.newInstance(sideEffect.itemId)
@@ -73,6 +76,9 @@ class ItemsListFragment : Fragment() {
           .addToBackStack(null)
           .commit()
       }
+    }
+    if (sideEffect !is ItemsListEventSideEffects.NoOpSideEffect) {
+      viewModel.acknowledgeSideEffectHandled()
     }
   }
 }

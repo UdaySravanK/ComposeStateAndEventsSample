@@ -53,6 +53,10 @@ class ItemsListViewModel(
     _sideEffects.tryEmit(sideEffects)
   }
 
+  fun acknowledgeSideEffectHandled() {
+    _sideEffects.tryEmit(ItemsListEventSideEffects.NoOpSideEffect)
+  }
+
   private fun updateItemsListScreenState() {
     _state.update {
       _state.value.copy(
